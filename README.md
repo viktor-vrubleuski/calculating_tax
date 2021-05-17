@@ -110,6 +110,8 @@ Start local server
 ```bash
 docker-compose up --build
 ```
+Now that the server’s running, visit http://127.0.0.1:8000/ with your Web browser. 
+
 
 The server is stopped by the command
 ```bash

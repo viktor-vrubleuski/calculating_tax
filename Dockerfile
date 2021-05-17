@@ -3,7 +3,7 @@ FROM python:3.8
 RUN mkdir -p /opt/services/djangoapp/src
 WORKDIR /opt/services/djangoapp/src
 
-
+RUN apt-get update && apt-get install -y netcat
 COPY Pipfile Pipfile.lock /opt/services/djangoapp/src/
 RUN pip install pipenv && pipenv install --system
 
