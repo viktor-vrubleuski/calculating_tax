@@ -1,6 +1,18 @@
 from rest_framework import serializers
 
 
+class GenericSerializerMixin:
+
+    @staticmethod
+    def transform_input(data):
+        data = data.get('payload')
+        return data
+
+    @staticmethod
+    def lowercase(string: str) -> str:
+        return string.lower()
+
+
 class EarningsSerializer(serializers.Serializer):
     income = serializers.IntegerField(style={'placeholder': 'Please, input your earnings'})
     detail = serializers.BooleanField()
@@ -62,3 +74,10 @@ class TaxSerializer(serializers.Serializer):
                 detail=data['detail']
             )
         return dict(tax_result=income_tax_band_1 + income_tax_band_2 + income_tax_band_3, detail=data['detail'])
+
+
+class TaxInternalSerializer(GenericSerializerMixin, TaxSerializer):
+
+    def to_internal_value(self, data):
+        data = super().to_internal_value(self.transform_input(data))
+        return data

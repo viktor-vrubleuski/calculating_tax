@@ -9,8 +9,9 @@ services:
       while ! nc -z database1 5432; do sleep 1; done;
       python manage.py makemigrations &&
       python manage.py migrate &&
+      python manage.py init_admin &&
       python manage.py collectstatic --noinput&&
-      gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+      gunicorn core.wsgi:application --bind 0.0.0.0:8000 --capture-output --access-logfile - --reload"
     volumes:
       - .:/opt/services/djangoapp/src
       - static_volume:/opt/services/djangoapp/src/static

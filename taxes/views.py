@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from taxes.constants import TAX_BAND_UP_TO_12500, TAX_BAND_UP_TO_50000, TAX_BAND_UP_TO_150000, TAX_BAND_OVER_150000
 from taxes.models import TaxBand
-from taxes.serializers import EarningsSerializer, TaxSerializer
+from taxes.serializers import EarningsSerializer, TaxSerializer, TaxInternalSerializer
 
 
 class MainView(APIView):
@@ -17,12 +17,6 @@ class MainView(APIView):
     def get(self, request):
         serializer = EarningsSerializer()
         return Response({'serializer': serializer})
-
-
-def get_data(tax_band_id):
-    if not cache.get(tax_band_id):
-        cache.set(tax_band_id, TaxBand.objects.get(id=tax_band_id))
-    return cache[tax_band_id]
 
 
 class TaxView(APIView):
@@ -38,7 +32,11 @@ class TaxView(APIView):
         second_band = self.get_data(TAX_BAND_UP_TO_50000)
         third_band = self.get_data(TAX_BAND_UP_TO_150000)
         fourth_band = self.get_data(TAX_BAND_OVER_150000)
-        serializer = TaxSerializer(
+        if request.content_type == 'application/json':
+            serializer = TaxInternalSerializer
+        else:
+            serializer = TaxSerializer
+        serializer = serializer(
             data=request.data,
             first_band=first_band,
             second_band=second_band,
@@ -48,4 +46,3 @@ class TaxView(APIView):
         if not serializer.is_valid():
             return Response(data={'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(data={'data': serializer.data}, status=status.HTTP_200_OK)
-

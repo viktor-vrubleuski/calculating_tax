@@ -110,8 +110,26 @@ Start local server
 ```bash
 docker-compose up --build
 ```
-Now that the server’s running, visit http://127.0.0.1:8000/ with your Web browser. 
+Now when the server’s running, visit http://127.0.0.1:8000/ with the help of your Web browser. You can input earnings to the field 
+and click calculate. The application returns the amount of income tax one. If you need details for each tax band select 
+detail.
 
+The application also has internal api http://127.0.0.1:8000/api/calculate-tax/, you can send Post request to get data.
+The request should look the following way:
+
+POST http://127.0.0.1:8000/api/calculate-tax/ contentType application/json raw {"payload": {"income": 52000, "detail": true }}
+"income": integer and "detail": boolean are required fields.
+
+Tax bands are uploaded in migrations, but you can change it in django admin http://127.0.0.1:8000/admin/
+credentials:
+    user = admin
+    password = admin1234
+
+For building this application were used:
+Django and Django for building Restful api
+Postgresql for storing data
+Nginx like web server
+Docker were used to run this application
 
 The server is stopped by the command
 ```bash
