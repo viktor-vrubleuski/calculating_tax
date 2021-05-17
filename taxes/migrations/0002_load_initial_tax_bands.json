@@ -1,0 +1,34 @@
+[
+    {
+        "model": "taxes.TaxBand",
+        "pk": "1",
+        "fields": {
+            "earnings_up_to": 12500,
+            "percent": 0
+        }
+    },
+    {
+        "model": "taxes.TaxBand",
+        "pk": "2",
+        "fields": {
+            "earnings_up_to": 50000,
+            "percent": 20
+        }
+    },
+  {
+        "model": "taxes.TaxBand",
+        "pk": "3",
+        "fields": {
+            "earnings_up_to": 150000,
+            "percent": 40
+        }
+    },
+  {
+        "model": "taxes.TaxBand",
+        "pk": "4",
+        "fields": {
+            "percent": 45
+        }
+    }
+
+]

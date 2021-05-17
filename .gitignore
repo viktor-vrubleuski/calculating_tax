@@ -1,0 +1,9 @@
+*__pycache__*
+init.sh
+db.sqlite3
+
+.my/
+.tmp/
+.var/
+.idea/
+.vscode/

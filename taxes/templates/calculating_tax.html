@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block title %}
+    Title
+{% endblock %}
+
+{% block content %}
+    <div class="col-8 mt-5">
+        <form class="form-horizontal" id="calculateTaxForm" method="post" novalidate>
+            {% csrf_token %}
+            {% render_form serializer template_pack='rest_framework/inline' %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-outline-success mr-5" id="calculateButton">Calculate</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-8 mt-5" id="taxDetail"></div>
+{% endblock %}
+
