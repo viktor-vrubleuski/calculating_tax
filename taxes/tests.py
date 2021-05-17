@@ -10,7 +10,7 @@ class AccountTests(APITestCase):
     def test_calculate_valid_value(self):
         url = reverse('calculate_tax')
         data = {'income': 52000, 'detail': False}
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data['data']['tax_result'], 8300)
@@ -20,7 +20,7 @@ class AccountTests(APITestCase):
     def test_calculate_valid_value_with_detail(self):
         url = reverse('calculate_tax')
         data = {'income': 52000, 'detail': True}
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data['data']['tax_result'], 8300)
